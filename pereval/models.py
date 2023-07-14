@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import JSONField
 
 from . import StatusNames
 
@@ -20,8 +19,8 @@ class Pereval(models.Model):
     other_titles = models.CharField(max_length=150)
     connect = models.TextField(blank=True)
 
-    coords = JSONField()
-    level = JSONField()
+    coords = models.JSONField()
+    level = models.JSONField()
 
     status = models.CharField(max_length=150, default=StatusNames.NEW, choices=StatusNames.CHOICES)
 
@@ -29,6 +28,6 @@ class Pereval(models.Model):
 
 
 class Images(models.Model):
-    pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE)
+    pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images')
     title = models.CharField(max_length=150)
     path = models.ImageField(upload_to="uploads/perevals")
