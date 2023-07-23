@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -81,11 +83,20 @@ DB_NAME = os.environ.get('FSTR_DB_NAME', 'map_db')
 DB_PORT = os.environ.get('FSTR_DB_PORT', 5432)
 DB_HOST = os.environ.get('FSTR_DB_HOST', 'localhost')
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"postgres://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}", conn_max_age=600
-    )
-}
+try:
+    asd
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=f"postgres://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}", conn_max_age=600
+        )
+    }
+except:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # Password validation

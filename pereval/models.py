@@ -11,6 +11,12 @@ class CustomUser(models.Model):
     phone = models.CharField(max_length=150)
 
 
+class Coords(models.Model):
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    height = models.IntegerField()
+
+
 class Pereval(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
@@ -19,8 +25,12 @@ class Pereval(models.Model):
     other_titles = models.CharField(max_length=150)
     connect = models.TextField(blank=True)
 
-    coords = models.JSONField()
-    level = models.JSONField()
+    coords = models.ForeignKey(Coords, on_delete=models.CASCADE)
+
+    winter = models.CharField(max_length=50, blank=True)
+    summer = models.CharField(max_length=50, blank=True)
+    autumn = models.CharField(max_length=50, blank=True)
+    spring = models.CharField(max_length=50, blank=True)
 
     status = models.CharField(max_length=150, default=StatusNames.NEW, choices=StatusNames.CHOICES)
 
