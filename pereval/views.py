@@ -12,7 +12,7 @@ class SubmitData(APIView):
 
     def get(self, request, format=None):
         try:
-            email = request.GET['email']
+            email = request.GET['user__email']
             perevals = Pereval.objects.filter(user__email=email)
         except Exception as e:
             perevals = Pereval.objects.all()
