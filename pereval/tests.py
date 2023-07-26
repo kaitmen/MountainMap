@@ -1,3 +1,11 @@
-from django.test import TestCase
+from rest_framework.test import RequestsClient
 
-# Create your tests here.
+client = RequestsClient()
+response = client.get('http://127.0.0.1:8000/api/submit_data')
+assert response.status_code == 200
+
+response = client.get('http://127.0.0.1:8000/api/submit_data/sakjhiasd')
+assert response.status_code == 404
+
+response = client.get('http://127.0.0.1:8000/api/submit_data/?user__email=example@gmail.com')
+assert response.status_code == 200
