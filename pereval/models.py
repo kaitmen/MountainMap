@@ -10,6 +10,9 @@ class CustomUser(models.Model):
     otc = models.CharField(max_length=150)
     phone = models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.email
+
 
 class Coords(models.Model):
     latitude = models.FloatField()
@@ -36,8 +39,20 @@ class Pereval(models.Model):
 
     add_time = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.title
+
 
 class Images(models.Model):
     pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images')
     title = models.CharField(max_length=150)
     path = models.ImageField(upload_to="uploads/perevals")
+
+    class Meta:
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.title

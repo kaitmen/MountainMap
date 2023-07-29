@@ -35,24 +35,30 @@ class ImagesSerializer(serializers.ModelSerializer):
 
 class PerevalSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer()
-
     coords = CoordsSerializer()
-
     images = serializers.ListField()
+    # level = serializers.SerializerMethodField('get_level')
 
     level = serializers.DictField(child=serializers.CharField(allow_blank=True), allow_null=True)
 
     class Meta:
         model = Pereval
         fields = ['user', 'beauty_title', 'title', 'other_titles', 'connect', 'coords', 'level',
-                  'winter', 'summer', 'autumn', 'spring', 'status', 'add_time', 'images']
+                  'status', 'add_time', 'images']
+
+    def get_level(self, obj):
+        return {
+                'winter': obj.winter,
+                'summer': obj.summer,
+                'autumn': obj.autumn,
+                'spring': obj.spring,
+            }
 
     def create(self, validated_data):
         uploaded_images = validated_data.pop("images")
         profile_data = validated_data.pop('user')
         coords_data = validated_data.pop('coords')
         levels_data = validated_data.pop('level')
-
 
         custom_user, created = CustomUser.objects.update_or_create(
             email=profile_data['email'],
@@ -88,24 +94,32 @@ class PerevalSerializer(serializers.ModelSerializer):
 
 class DetailPerevalSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer()
-
     images = ImagesSerializer(many=True, read_only=True)
-
     coords = CoordsSerializer()
+    level = serializers.SerializerMethodField('get_level')
 
     class Meta:
         model = Pereval
         fields = ['user', 'beauty_title', 'title', 'other_titles', 'connect', 'coords',
-                  'winter', 'summer', 'autumn', 'spring', 'status', 'add_time', 'images']
+                  'level', 'status', 'add_time', 'images']
+
+    def get_level(self, obj):
+        return {
+                'winter': obj.winter,
+                'summer': obj.summer,
+                'autumn': obj.autumn,
+                'spring': obj.spring,
+            }
 
 
 class UpdatePerevalSerializer(serializers.HyperlinkedModelSerializer):
     coords = CoordsSerializer()
     images = serializers.ListField()
+    level = serializers.DictField(child=serializers.CharField(allow_blank=True), allow_null=True)
 
     class Meta:
         model = Pereval
-        fields = ['beauty_title', 'title', 'other_titles', 'connect', 'coords',
+        fields = ['beauty_title', 'title', 'other_titles', 'connect', 'coords', 'level',
                   'winter', 'summer', 'autumn', 'spring', 'status', 'add_time', 'images']
 
     def validate(self, data):
