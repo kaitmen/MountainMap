@@ -20,14 +20,18 @@ PUT: /api/submit_data/id  --  edit pereval by id (all info except user detail) <
 <h1 align="center">Are you developer and want use project on local server?</h1>
 <h3 align="center">Follow next steps:</h3>
 <hr>
-1. Create project in Pycharm with name as you like<br>
-2. In terminal enter ```git clone https://github.com/kaitmen/MountainMap```<br>
-3. In terminal enter ```cd *project name*```<br>
-4. In terminal enter ```pip install -r requirements.txt```<br>
-5. Open settings.py file and make database configurations<br>
-6. In terminal enter ```python manage.py makemigrations```<br>
-7. In terminal enter ```python manage.py migrate```<br>
-8. In terminal enter ```python manage.py runserver```<br>
+
+1. Create project in Pycharm with name as you like
+
+2. In terminal enter ```git clone https://github.com/kaitmen/MountainMap```
+
+3. In terminal enter ```cd *project name*```
+
+4. In terminal enter ```pip install -r requirements.txt```
+5. Open settings.py file and make database configurations
+6. In terminal enter ```python manage.py makemigrations```
+7. In terminal enter ```python manage.py migrate```
+8. In terminal enter ```python manage.py runserver```
 
 Now you can testing API
 
