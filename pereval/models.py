@@ -4,7 +4,7 @@ from . import StatusNames
 
 
 class CustomUser(models.Model):
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     fam = models.CharField(max_length=150)
     name = models.CharField(max_length=150)
     otc = models.CharField(max_length=150)
@@ -13,11 +13,24 @@ class CustomUser(models.Model):
     def __str__(self):
         return self.email
 
+    def get_fio(self):
+        return f"{self.name} {self.otc} {self.fam}"
+
+    def get_count_perevals(self):
+        return self.pereval_set.count()
+
 
 class Coords(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     height = models.IntegerField()
+
+    def get_dict(self):
+        return {
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'height': self.height
+        }
 
 
 class Pereval(models.Model):
@@ -30,10 +43,10 @@ class Pereval(models.Model):
 
     coords = models.ForeignKey(Coords, on_delete=models.CASCADE)
 
-    winter = models.CharField(max_length=50, blank=True)
-    summer = models.CharField(max_length=50, blank=True)
-    autumn = models.CharField(max_length=50, blank=True)
-    spring = models.CharField(max_length=50, blank=True)
+    winter = models.CharField(max_length=50, blank=True, null=True)
+    summer = models.CharField(max_length=50, blank=True, null=True)
+    autumn = models.CharField(max_length=50, blank=True, null=True)
+    spring = models.CharField(max_length=50, blank=True, null=True)
 
     status = models.CharField(max_length=150, default=StatusNames.NEW, choices=StatusNames.CHOICES)
 
@@ -44,6 +57,14 @@ class Pereval(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_level_dict(self):
+        return {
+            'winter': self.winter,
+            'summer': self.summer,
+            'autumn': self.autumn,
+            'spring': self.spring
+        }
 
 
 class Images(models.Model):

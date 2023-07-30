@@ -77,14 +77,13 @@ WSGI_APPLICATION = 'map.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DB_PASS = os.environ.get('FSTR_DB_PASS', 'map_password')
+DB_PASS = os.environ.get('FSTR_PASS', 'map_password')
 DB_USER = os.environ.get('FSTR_DB_USER', 'map_user')
-DB_NAME = os.environ.get('FSTR_DB_NAME', 'map_db')
+DB_NAME = os.environ.get('FSTR_LOGIN', 'map_db')
 DB_PORT = os.environ.get('FSTR_DB_PORT', 5432)
 DB_HOST = os.environ.get('FSTR_DB_HOST', 'localhost')
 
 try:
-    asd
     DATABASES = {
         "default": dj_database_url.config(
             default=f"postgres://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}", conn_max_age=600

@@ -4,6 +4,8 @@ Hi there, it is API project Mountain Map!
 </h1>
 <h3 align="center">See below all functionality of API </h3>
 
+You can Use Beta Server - http://orientir.pythonanywhere.com/api/submit_data/
+
 Swagger API Documentation - https://app.swaggerhub.com/apis/KAITMEN17/PerevalAPI/1.0.0
 
 <hr>
@@ -34,5 +36,8 @@ PUT: /api/submit_data/id  --  edit pereval by id (all info except user detail) <
 8. In terminal enter ```python manage.py runserver```
 
 Now you can testing API
+
+<h3>For test running enter:</h3>
+```python manage.py test```
 
 
