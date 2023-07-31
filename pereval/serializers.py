@@ -124,7 +124,7 @@ class UpdatePerevalSerializer(serializers.HyperlinkedModelSerializer):
 
     def validate(self, data):
         instance = self.instance
-        if instance.status == StatusNames.NEW:
+        if instance.status != StatusNames.NEW:
             raise exceptions.ValidationError(detail="You can edit only new perevals")
         return data
 
@@ -140,15 +140,16 @@ class UpdatePerevalSerializer(serializers.HyperlinkedModelSerializer):
         )
 
         instance.coords = coords
-        instance.beauty_title = self.context['beauty_title']
-        instance.title = self.context['title']
-        instance.other_titles = self.context['other_titles']
-        instance.connect = self.context['connect']
+        print(validated_data)
+        instance.beauty_title = validated_data['beauty_title']
+        instance.title = validated_data['title']
+        instance.other_titles = validated_data['other_titles']
+        instance.connect = validated_data['connect']
         instance.winter = levels_data['winter']
         instance.summer = levels_data['summer']
         instance.autumn = levels_data['autumn']
         instance.spring = levels_data['spring']
-        instance.status = self.context['status']
+        instance.status = validated_data['status']
         instance.save()
 
         uploaded_images = validated_data.pop("images")
